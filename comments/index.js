@@ -1,10 +1,12 @@
 const express = require('express')
 const { randomBytes } = require('crypto')
+const cors = require('cors')
 
 const app = express()
 const PORT = 4001
 
 app.use(express.json())
+app.use(cors())
 
 const commentsByPostID = {}
 
@@ -20,7 +22,6 @@ app.post('/posts/:id/comments', (req, res) => {
     const comments = commentsByPostID[id] || []
     comments.push({ id: commentID, content })
     commentsByPostID[id] = comments
-
     res.status(201).send(comments)
 })
 
